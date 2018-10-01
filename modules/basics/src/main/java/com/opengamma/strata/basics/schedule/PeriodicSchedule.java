@@ -841,10 +841,22 @@ public final class PeriodicSchedule
     // or
     // StandardDayConvention is used and the day is not a valid roll date
 
-    if (refData != null &&
-        rollConvention != null &&
-        BusinessDayAdjustment.NONE.equals(startDateBusinessDayAdjustment)) {
-      return calculatedUnadjustedDateFromAdjusted(startDate, rollConvention, businessDayAdjustment, refData);
+//    if (refData != null &&
+//        rollConvention != null &&
+//        BusinessDayAdjustment.NONE.equals(startDateBusinessDayAdjustment)) {
+//      return calculatedUnadjustedDateFromAdjusted(startDate, rollConvention, businessDayAdjustment, refData);
+//    }
+    if (refData != null && rollConvention != null) {
+      BusinessDayAdjustment adj = businessDayAdjustment;
+      if (startDateBusinessDayAdjustment != null &&
+          !BusinessDayAdjustment.NONE.equals(startDateBusinessDayAdjustment)) {
+        adj = startDateBusinessDayAdjustment;
+      }
+//      BusinessDayAdjustment adj =
+//          startDateBusinessDayAdjustment == null || BusinessDayAdjustment.NONE.equals(startDateBusinessDayAdjustment) ?
+//              businessDayAdjustment :
+//              startDateBusinessDayAdjustment;
+      return calculatedUnadjustedDateFromAdjusted(startDate, rollConvention, adj, refData);
     }
     return startDate;
   }
